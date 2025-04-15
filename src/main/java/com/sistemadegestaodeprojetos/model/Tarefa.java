@@ -12,6 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
@@ -22,9 +25,14 @@ public class Tarefa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O título não pode ser em branco")
+    @Size(min = 3, max = 100, message = "O título deve ter entre 3 e 100 caracteres")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ0-9\\s.,!?()-]{3,100}$", message = "O título deve conter apenas letras, números e sinais permitidos, entre 3 e 100 caracteres")
     @Column(name = "TITULO", length = 100, nullable = false)
     private String titulo;
 
+    @NotBlank(message = "A descrição não pode ser em branco")
+    @Pattern(regexp = "^[A-Za-zÀ-ÿ0-9\\s.,!?()-]{5,100}$", message = "A descrição deve conter apenas letras, números e sinais permitidos, entre 5 e 100 caracteres")
     @Column(name = "DESCRICAO", length = 100, nullable = false)
     private String descricao;
 

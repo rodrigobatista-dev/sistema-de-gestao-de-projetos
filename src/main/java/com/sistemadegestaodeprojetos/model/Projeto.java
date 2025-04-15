@@ -8,10 +8,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
 
-@Data
 @Entity(name = "PROJETO")
 public class Projeto {
 
@@ -19,15 +20,23 @@ public class Projeto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "responsavel")
+    private Usuario usuario;
+
+    @NotBlank(message = "O nome não pode estar em branco")
     @Column(name = "NOME", length = 100, nullable = false)
     private String nome;
 
+    @NotBlank(message = "O nome não pode estar em branco")
     @Column(name = "TITULO", length = 100, nullable = false)
     private String titulo;
 
+    @NotBlank(message = "O nome não pode estar em branco")
     @Column(name = "DESCRICAO", length = 100, nullable = false)
     private String descricao;
 
+    @NotBlank(message = "O nome não pode estar em branco")
     @Column(name = "DATA_CRIACAO", nullable = false)
     private LocalDateTime dataCriacao;
 
