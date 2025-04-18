@@ -1,18 +1,12 @@
 package com.sistemadegestaodeprojetos.model;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.validation.constraints.NotBlank;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
 @Entity(name = "PROJETO")
 public class Projeto {
 
@@ -28,15 +22,14 @@ public class Projeto {
     @Column(name = "NOME", length = 100, nullable = false)
     private String nome;
 
-    @NotBlank(message = "O nome não pode estar em branco")
+    @NotBlank(message = "O título não pode estar em branco")
     @Column(name = "TITULO", length = 100, nullable = false)
     private String titulo;
 
-    @NotBlank(message = "O nome não pode estar em branco")
+    @NotBlank(message = "A descrição não pode estar em branco")
     @Column(name = "DESCRICAO", length = 100, nullable = false)
     private String descricao;
 
-    @NotBlank(message = "O nome não pode estar em branco")
     @Column(name = "DATA_CRIACAO", nullable = false)
     private LocalDateTime dataCriacao;
 
@@ -50,7 +43,6 @@ public class Projeto {
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false)
     private Status status;
-
 }
 
 // O uso de columnDefinition = "varchar(100)" não é necessário porque:

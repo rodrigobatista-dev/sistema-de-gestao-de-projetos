@@ -1,10 +1,9 @@
 package com.sistemadegestaodeprojetos.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.sistemadegestaodeprojetos.model.Projeto;
 import com.sistemadegestaodeprojetos.repository.ProjetoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,22 +14,32 @@ public class ProjetoService {
     @Autowired
     private ProjetoRepository projetoRepository;
 
-    // Criar um novo projeto
-    public Projeto salvarProjeto(Projeto projeto) {
+    // Verifica se um projeto existe pelo ID
+    public boolean isExiste(Long id) {
+        return projetoRepository.existsById(id);
+    }
+
+    // Cria um novo projeto
+    public Projeto criarProjeto(Projeto projeto) {
         return projetoRepository.save(projeto);
     }
 
-    // Listar todos os projetos
+    // Atualiza um projeto existente
+    public Projeto atualizarProjeto(Projeto projeto) {
+        return projetoRepository.save(projeto);
+    }
+
+    // Lista todos os projetos
     public List<Projeto> listarProjetos() {
         return projetoRepository.findAll();
     }
 
-    // Buscar um projeto pelo ID
+    // Busca um projeto por ID
     public Optional<Projeto> buscarProjetoPorId(Long id) {
         return projetoRepository.findById(id);
     }
 
-    // Excluir um projeto pelo ID
+    // Exclui um projeto por ID
     public void excluirProjeto(Long id) {
         projetoRepository.deleteById(id);
     }
