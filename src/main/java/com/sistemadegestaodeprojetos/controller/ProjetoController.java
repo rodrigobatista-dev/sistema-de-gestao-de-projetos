@@ -6,14 +6,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import com.sistemadegestaodeprojetos.model.Projeto;
+import com.sistemadegestaodeprojetos.dto.ProjetoRequestDTO;
+import com.sistemadegestaodeprojetos.dto.ProjetoResponseDTO;
+import com.sistemadegestaodeprojetos.exceptionerros.ProjetoNaoEncontradaException;
+
 import com.sistemadegestaodeprojetos.service.ProjetoService;
 
 import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/projetos")
@@ -22,8 +24,8 @@ public class ProjetoController {
     @Autowired
     private ProjetoService projetoService;
 
-    @PostMapping("/cadastrarprojeto")
-    public ResponseEntity<?> criarProjeto(@RequestBody @Valid Projeto projeto, BindingResult bindingResult) {
+    @PostMapping("/criarprojeto")
+    public ResponseEntity<?> criarProjeto(@RequestBody @Valid ProjetoRequestDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> listaDeErros = new ArrayList<>();
             for (ObjectError erro : bindingResult.getAllErrors()) {
@@ -33,23 +35,26 @@ public class ProjetoController {
         }
 
         try {
-            projeto = projetoService.criarProjeto(projeto);
+            ProjetoResponseDTO projeto = projetoService.criarProjeto(dto);
             return ResponseEntity.ok(projeto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao criar projeto: " + e.getMessage());
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<Projeto>> listarProjetos() {
+    @GetMapping("/listarprojeto")
+    public ResponseEntity<List<ProjetoResponseDTO>> listarProjetos() {
         return ResponseEntity.ok(projetoService.listarProjetos());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Projeto> buscarProjeto(@PathVariable Long id) {
-        Optional<Projeto> projeto = projetoService.buscarProjetoPorId(id);
-        return projeto.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<ProjetoResponseDTO> buscarProjeto(@PathVariable Long id) {
+        try {
+            ProjetoResponseDTO projeto = projetoService.buscarProjetoPorId(id);
+            return ResponseEntity.ok(projeto);
+        } catch (ProjetoNaoEncontradaException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Excluir projeto por ID
@@ -68,8 +73,9 @@ public class ProjetoController {
     }
 
     // Atualizar projeto
-    @PutMapping("/atualizar")
-    public ResponseEntity<?> atualizarProjeto(@RequestBody @Valid Projeto projeto, BindingResult bindingResult) {
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<?> atualizarProjeto(@PathVariable Long id, @RequestBody @Valid ProjetoRequestDTO dto,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> listarErros = new ArrayList<>();
             for (ObjectError erro : bindingResult.getAllErrors()) {
@@ -79,14 +85,11 @@ public class ProjetoController {
         }
 
         try {
-            if (projetoService.isExiste(projeto.getId())) {
-                projeto = projetoService.atualizarProjeto(projeto);
-                return ResponseEntity.ok(projeto);
-            } else {
-                return ResponseEntity.badRequest().body("O ID informado não se encontra cadastrado");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Erro ao atualizar projeto");
+            ProjetoResponseDTO projetoAtualizar = projetoService.atualizarProjeto(id, dto);
+            return ResponseEntity.ok(projetoAtualizar);
+
+        } catch (ProjetoNaoEncontradaException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

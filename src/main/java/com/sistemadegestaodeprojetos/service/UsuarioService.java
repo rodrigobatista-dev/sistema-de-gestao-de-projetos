@@ -3,11 +3,14 @@ package com.sistemadegestaodeprojetos.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sistemadegestaodeprojetos.dto.UsuarioRequestDTO;
+import com.sistemadegestaodeprojetos.dto.UsuarioResponseDTO;
+import com.sistemadegestaodeprojetos.exceptionerros.UsuarioNaoEncontradoException;
+import com.sistemadegestaodeprojetos.mapper.UsuarioMapper;
 import com.sistemadegestaodeprojetos.model.Usuario;
 import com.sistemadegestaodeprojetos.repository.UsuarioRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -26,19 +29,37 @@ public class UsuarioService {
         return lista.isEmpty(); // retorna true se o CPF não foi encontrado (ou seja, pode cadastrar)
     }
 
-    // Cadastra um novo usuário
-    public Usuario criarUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    // Cadastra um novo usuário usando o DTO
+    public UsuarioResponseDTO criarUsuario(UsuarioRequestDTO dto) {
+        Usuario usuario = UsuarioMapper.toEntity(dto);
+        Usuario salvo = usuarioRepository.save(usuario);
+        return UsuarioMapper.toDTO(salvo);
     }
 
-    // Atualiza um usuário existente
-    public Usuario atualizar(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
+        Usuario usuarioexistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com ID " + id + " não encontrado."));
+
+        usuarioexistente.setNome(dto.getNome());
+        usuarioexistente.setEmail(dto.getEmail());
+
+        Usuario usuarioAtualizar = usuarioRepository.save(usuarioexistente);
+
+        return UsuarioMapper.toDTO(usuarioAtualizar);
+
+    }
+
+    // Método utilitário para buscar ou lançar exceção
+    public Usuario buscarOuLancarExcecao(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com ID " + id + " não foi encontrado."));
     }
 
     // Retorna todos os usuários do banco
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> listarUsuarios() {
+
+        return usuarioRepository.findAll().stream()
+                .map(UsuarioMapper::toDTO).toList();
     }
 
     // Remove um usuário pelo ID
@@ -46,8 +67,9 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    // Busca um usuário específico pelo ID
-    public Optional<Usuario> buscarUsuarioPorId(Long id) {
-        return usuarioRepository.findById(id);
+    // Buscar usuário por ID e retornar um DTO
+    public UsuarioResponseDTO buscarUsuarioPorId(Long id) {
+        return UsuarioMapper.toDTO(buscarOuLancarExcecao(id));
     }
+
 }

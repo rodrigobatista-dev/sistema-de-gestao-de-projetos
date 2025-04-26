@@ -6,14 +6,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import com.sistemadegestaodeprojetos.model.Tarefa;
+import com.sistemadegestaodeprojetos.dto.TarefaRequestDTO;
+import com.sistemadegestaodeprojetos.dto.TarefaResponseDTO;
+import com.sistemadegestaodeprojetos.exceptionerros.TarefaNaoEncontradaException;
+import com.sistemadegestaodeprojetos.exceptionerros.UsuarioNaoEncontradoException;
 import com.sistemadegestaodeprojetos.service.TarefaService;
 
 import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/tarefas")
@@ -24,36 +26,36 @@ public class TarefaController {
 
     // Criar nova tarefa
     @PostMapping("criartarefa")
-    public ResponseEntity<?> criarTarefa(@RequestBody @Valid Tarefa tarefa, BindingResult bindingResult) {
+    public ResponseEntity<?> criarTarefa(@RequestBody @Valid TarefaRequestDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> erros = new ArrayList<>();
             for (ObjectError erro : bindingResult.getAllErrors()) {
                 erros.add(erro.getDefaultMessage());
-
             }
-            return ResponseEntity.badRequest().body(erros);
+            return ResponseEntity.badRequest().body(erros); // Vai te mostrar os erros do DTO
         }
 
         try {
-            tarefa = tarefaService.criarTarefa(tarefa);
+            TarefaResponseDTO tarefa = tarefaService.criarTarefa(dto);
             return ResponseEntity.ok(tarefa);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao criar tarefa: " + e.getMessage());
         }
-
     }
 
     @GetMapping
-    public List<Tarefa> listarTarefas() {
+    public List<TarefaResponseDTO> listarTarefas() {
         return tarefaService.listarTarefas();
     }
 
-    // Buscar tarefa por ID
     @GetMapping("/busacarpor/{id}")
-    public ResponseEntity<Tarefa> buscarTarefa(@PathVariable Long id) {
-        Optional<Tarefa> tarefa = tarefaService.buscarTarefaPorId(id);
-        return tarefa.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<TarefaResponseDTO> buscarTarefa(@PathVariable Long id) {
+        try {
+            TarefaResponseDTO tarefa = tarefaService.buscarTarefaPorId(id);
+            return ResponseEntity.ok(tarefa);
+        } catch (UsuarioNaoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // excluir tarefa por ID
@@ -72,8 +74,9 @@ public class TarefaController {
     }
 
     // Atualizar tarefa
-    @PutMapping("/atulizar")
-    public ResponseEntity<?> atualizarTarefa(@RequestBody @Valid Tarefa tarefa, BindingResult bindingResult) {
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<?> atualizarTarefa(@PathVariable Long id, @RequestBody @Valid TarefaRequestDTO dto,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> listaDeErros = new ArrayList<>();
             for (ObjectError erro : bindingResult.getAllErrors()) {
@@ -81,18 +84,13 @@ public class TarefaController {
 
             }
             return ResponseEntity.badRequest().body(listaDeErros);
-
         }
 
         try {
-            if (tarefaService.isExiste(tarefa.getId())) {
-                tarefa = tarefaService.atualizar(tarefa);
-                return ResponseEntity.ok(tarefa);
-            } else {
-                return ResponseEntity.badRequest().body("O ID informado não se encontra cadastrado");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Erro ao atualizar tarefa");
+            TarefaResponseDTO tarefaAtualizar = tarefaService.atualizar(id, dto);
+            return ResponseEntity.ok(tarefaAtualizar);
+        } catch (TarefaNaoEncontradaException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

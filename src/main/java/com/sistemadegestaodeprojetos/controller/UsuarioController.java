@@ -6,13 +6,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import com.sistemadegestaodeprojetos.model.Usuario;
+import com.sistemadegestaodeprojetos.dto.UsuarioRequestDTO;
+import com.sistemadegestaodeprojetos.dto.UsuarioResponseDTO;
+import com.sistemadegestaodeprojetos.exceptionerros.UsuarioNaoEncontradoException;
+
 import com.sistemadegestaodeprojetos.service.UsuarioService;
 
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -23,7 +25,7 @@ public class UsuarioController {
 
     // Criar usuário
     @PostMapping("/criarUsuario")
-    public ResponseEntity<?> criarUsuario(@RequestBody @Valid Usuario usuario, BindingResult bindingResult) {
+    public ResponseEntity<?> criarUsuario(@RequestBody @Valid UsuarioRequestDTO dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> listaDeErros = new ArrayList<>();
             for (ObjectError erro : bindingResult.getAllErrors()) {
@@ -33,8 +35,8 @@ public class UsuarioController {
         }
 
         try {
-            if (usuarioService.notExisteCpf(usuario.cpf)) {
-                usuario = usuarioService.criarUsuario(usuario);
+            if (usuarioService.notExisteCpf(dto.getCpf())) {
+                UsuarioResponseDTO usuario = usuarioService.criarUsuario(dto);
                 return ResponseEntity.ok(usuario);
             } else {
                 return ResponseEntity.badRequest().body("O CPF informado já se encontra cadastrado");
@@ -47,16 +49,19 @@ public class UsuarioController {
 
     // Listar todos os usuários
     @GetMapping("/listar")
-    public List<Usuario> listar() {
+    public List<UsuarioResponseDTO> listar() {
         return usuarioService.listarUsuarios();
     }
 
     // Buscar usuário por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuario(@PathVariable Long id) {
-        Optional<Usuario> usuario = usuarioService.buscarUsuarioPorId(id);
-        return usuario.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("buscarpor/{id}")
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuario(@PathVariable Long id) {
+        try {
+            UsuarioResponseDTO usuario = usuarioService.buscarUsuarioPorId(id);
+            return ResponseEntity.ok(usuario);
+        } catch (UsuarioNaoEncontradoException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Excluir usuário por ID
@@ -75,8 +80,9 @@ public class UsuarioController {
     }
 
     // Atualizar usuário
-    @PutMapping("/atualizar")
-    public ResponseEntity<?> atualizar(@RequestBody @Valid Usuario usuario, BindingResult bindingResult) {
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioRequestDTO dto,
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> listaDeErros = new ArrayList<>();
             for (ObjectError erro : bindingResult.getAllErrors()) {
@@ -86,14 +92,10 @@ public class UsuarioController {
         }
 
         try {
-            if (usuarioService.isExiste(usuario.id)) {
-                usuario = usuarioService.atualizar(usuario);
-                return ResponseEntity.ok(usuario.id);
-            } else {
-                return ResponseEntity.badRequest().body("O ID informado não se encontra cadastrado");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Não foi possível atualizar o usuário");
+            UsuarioResponseDTO usuarioAtualizado = usuarioService.atualizar(id, dto); // Atualiza o usuário com DTO
+            return ResponseEntity.ok(usuarioAtualizado);
+        } catch (UsuarioNaoEncontradoException e) {
+            return ResponseEntity.notFound().build(); // Retorna 404 se não encontrar o usuário
         }
     }
 }

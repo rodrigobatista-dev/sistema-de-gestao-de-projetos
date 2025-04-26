@@ -2,11 +2,10 @@ package com.sistemadegestaodeprojetos.model;
 
 import java.time.LocalDateTime;
 
+import com.sistemadegestaodeprojetos.enums.StatusProjeto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
-@Data
 @Entity(name = "PROJETO")
 public class Projeto {
 
@@ -17,10 +16,6 @@ public class Projeto {
     @ManyToOne
     @JoinColumn(name = "responsavel")
     private Usuario usuario;
-
-    @NotBlank(message = "O nome não pode estar em branco")
-    @Column(name = "NOME", length = 100, nullable = false)
-    private String nome;
 
     @NotBlank(message = "O título não pode estar em branco")
     @Column(name = "TITULO", length = 100, nullable = false)
@@ -34,7 +29,7 @@ public class Projeto {
     private LocalDateTime dataCriacao;
 
     @PrePersist
-    public void prePersist() {
+    private void prePersist() {
         if (dataCriacao == null) {
             dataCriacao = LocalDateTime.now();
         }
@@ -42,7 +37,56 @@ public class Projeto {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false)
-    private Status status;
+    private StatusProjeto status;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public StatusProjeto getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusProjeto status) {
+        this.status = status;
+    }
+
 }
 
 // O uso de columnDefinition = "varchar(100)" não é necessário porque:
