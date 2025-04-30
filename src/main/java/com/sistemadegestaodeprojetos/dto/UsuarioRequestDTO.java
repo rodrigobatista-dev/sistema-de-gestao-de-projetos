@@ -25,7 +25,8 @@ public class UsuarioRequestDTO { // para entrada de dados (POST/PUT)
 
     @Schema(description = "Informe seu CPF: ", example = "000.000.000-00", required = true)
     @NotBlank(message = "O CPF não pode estar em branco")
-    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}", message = "CPF deve estar no formato 000.000.000-00")
+    // @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}", message = "CPF deve
+    // estar no formato 000.000.000-00")
     private String cpf;
 
     public String getNome() {

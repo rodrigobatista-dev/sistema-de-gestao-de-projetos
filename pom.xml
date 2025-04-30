@@ -22,11 +22,11 @@
 
 	<dependencies>
 		<!-- Lombok -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency> -->
 
 		<!-- Spring Boot Starters -->
 		<dependency>
