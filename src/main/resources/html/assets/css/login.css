@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background-attachment: fixed;
+    background-image: url("../img/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+
+}
+
+.formulario {
+    width: 450px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.caixa-formulario {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.caixa-formulario input {
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    color: #101010;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    padding: 0 15px;
+}
+
+.caixa-formulario input::placeholder {
+    color: rgba(31, 29, 29, 0.885);
+    font-size: 14px;
+
+}
+
+.caixa-formulario i {
+    position: absolute;
+    right: 8px;
+    font-size: 20px;
+    color: rgba(31, 29, 29, 0.885);
+    z-index: 1;
+}
+
+.caixa-lembrar-esqueci {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.caixa-lembrar-esqueci label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.caixa-lembrar-esqueci label input {
+    accent-color: blue;
+    width: 15px;
+
+}
+
+.caixa-lembrar-esqueci a {
+    text-decoration: none;
+    color: #fff;
+
+}
+
+.caixa-lembrar-esqueci a:hover {
+    text-decoration: underline;
+
+}
+
+button {
+    width: 100%;
+    height: 45px;
+    border: none;
+    background-color: rgba(82, 104, 228, 0.9);
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    color: #fff;
+}
+button:hover {
+    background-color: rgba(82, 104, 228, 0.5);
+    transform: translateY(-5px);
+}
+
+.link-registro {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+}
+
+
+
+.link-registro a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.link-registro a:hover {
+    text-decoration: underline;
+}
+
+
+.logo {
+    display: flex;
+    margin: 0 auto;
+    width: 200px;
+}
+.logo-treina-recife {
+    width: 50px; /* ou o tamanho desejado */
+    position: absolute;
+    top: 530px;
+    right: 20px;
+    z-index: 999;
+}
