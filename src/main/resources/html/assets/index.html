@@ -1,12 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Dashboard</title>
 </head>
+
 <body>
-    
-    
+    <aside class="menu-lateral">
+        <div class="logo-conterner">
+            <img src="./img/sgp_logo_horizontal.png" alt="logo menu-lateral" class="logo-menu-lateral" />
+        </div>
+
+        <nav class="menu">
+            <ul>
+                <li class="menu-item ativo">
+                    <a href="#"><i class="bi bi-bar-chart"></i> Dashboard</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#"><i class="bi bi-list-task"></i> Tarefas</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#"><i class="bi bi-diagram-2-fill"></i> Projetos</a>
+                </li>
+                <li class="menu-item">
+                    <a href="#"><i class="bi bi-people-fill"></i> Usuários</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="logout-container">
+            <div class="linha-logout"></div>
+            <button class="btn-logout">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+    <div class="conteudo">
+        <header class="cabecalho">
+            <div class="cabecalho-container">
+                <h1>Dashboard</h1>
+            </div>
+        </header>
+
+        <main class="painel-principal">
+
+            <section class="cards-container">
+
+                <div class="card-backlog">
+                    <i class="bi bi-text-left"></i>
+                    <p>0</p>
+                    <h3>Backlog</h3>
+                </div>
+
+                <div class="card-atividades">
+                    <i class="bi bi-wechat"></i>
+                    <p>0</p>
+                    <h3>Atividades Abertas</h3>
+                </div>
+
+                <div class="card-encerradas">
+                    <i class="bi bi-life-preserver"></i>
+                    <p>0</p>
+                    <h3>Encerradas</h3>
+                </div>
+
+                <div class="card-entregues">
+                    <i class="bi bi-cart3"></i>
+                    <p>0</p>
+                    <h3>Atividades Entregues</h3>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
+
 </html>

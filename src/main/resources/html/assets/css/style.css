@@ -1,0 +1,318 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+}
+
+.menu-lateral {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: white;
+    color: white;
+    padding: 20px 0;
+   flex-shrink: 0;
+}
+.menu-lateral li {
+    background-color: white;
+    padding: 10px 40px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: 5px solid white;
+}
+.menu-lateral li:hover {
+    background-color: #3b44e0;
+}
+.menu-lateral li a {
+    color: rgb(31, 30, 30);
+    text-decoration: none;
+    font-size: 15px;
+}
+
+
+.logo-menu-lateral {
+    width: 100px;
+    height: auto;
+}
+
+.logo-conterner {
+    border-bottom: 5px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.painel-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 100px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: auto;
+    padding: 20px;
+    background-color: #0e0157;
+    min-height: 100vh;
+    overflow: hidden;
+}
+.conteudo {
+    flex: 1;
+    margin-left: 100px; /* mesma largura do .menu-lateral */
+    display: flex;
+    flex-direction: column;
+}
+
+
+.cabecalho {
+    width: 100%;
+    padding: 20px;
+    color: rgb(18, 16, 16);
+    text-align: center;
+    margin-left: 15px;
+    
+
+
+
+}
+
+.cabecalho-container h1 {
+    font-size: 28px;
+    margin-left: 0px;
+    margin-bottom: auto;
+}
+
+
+
+
+/* Container dos cards */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* === CARD BACKLOG === */
+.card-backlog {
+    background-color: green;
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    position: relative;
+    
+}
+
+.card-backlog:hover {
+    background-color: #45a049;
+}
+
+.card-backlog h3 {
+    color: white;
+    font-size: 15px;
+    margin-bottom: 10px;
+    text-align: end;
+}
+
+.card-backlog p {
+    color: white;
+    font-size: 30px;
+    text-align: end;
+    margin-bottom: 10px;
+}
+
+.card-backlog i {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 50px;
+}
+
+/* === CARD ATIVIDADES === */
+.card-atividades {
+    background-color: rgb(34, 67, 232);
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 350px;
+    position: relative;
+}
+
+.card-atividades:hover {
+    background-color: #644cef;
+}
+
+.card-atividades h3,
+.card-atividades p {
+    color: white;
+    text-align: end;
+}
+
+.card-atividades h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.card-atividades p {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.card-atividades i {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 50px;
+}
+
+/* === CARD ENCERRADAS === */
+.card-encerradas {
+    background-color: rgb(242, 28, 13);
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 350px;
+    position: relative;
+}
+
+.card-encerradas:hover {
+    background-color: #f56363;
+}
+
+.card-encerradas h3,
+.card-encerradas p {
+    color: white;
+    text-align: end;
+}
+
+.card-encerradas h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.card-encerradas p {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.card-encerradas i {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 50px;
+}
+
+/* === CARD ENTREGUES === */
+.card-entregues {
+    background-color: rgb(246, 128, 10);
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 350px;
+    position: relative;
+}
+
+.card-entregues:hover {
+    background-color: #f49247;
+}
+
+.card-entregues h3,
+.card-entregues p {
+    color: white;
+    text-align: end;
+}
+
+.card-entregues h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.card-entregues p {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.card-entregues i {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 50px;
+}
+
+.cards-container .card {
+    border-bottom: 5px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.linha-logout {
+    border-bottom: 5px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+
+
+}
+
+/* === BOTÃO LOGOUT === */
+.logout-container {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-logout {
+    background-color: #4d53ff;
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #ff1a1a;
+}
+
+.logo-menu-lateral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.cabecalho-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38%;
+    height: 0px;
+    bottom: 0;
+    color: black;
+    
+}
