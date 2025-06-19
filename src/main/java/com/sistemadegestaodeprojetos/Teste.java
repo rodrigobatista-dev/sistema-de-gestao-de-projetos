@@ -7,7 +7,7 @@ import java.sql.*;
 public class Teste {
     private static final String URL = "jdbc:mysql://localhost:3306/sistemadegestaodeprojetos?useTimezone=true&serverTimezone=UTC";
     private static final String USUARIO = "root";
-    private static final String SENHA = "root";
+    private static final String SENHA = "Root@2025!";
 
     public static Connection getConnection() throws SQLException {
         try {

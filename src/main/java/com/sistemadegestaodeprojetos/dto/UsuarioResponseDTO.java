@@ -6,7 +6,7 @@ public class UsuarioResponseDTO { // para saída de dados (GET)
     private String nome;
     private String email;
     private String cpf;
-    private String senha;
+
 
     // contrutores
     public UsuarioResponseDTO(Long id, String nome, String email) {
@@ -47,12 +47,17 @@ public class UsuarioResponseDTO { // para saída de dados (GET)
         this.cpf = cpf;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 
 }
+
+
+/*
+ * ____ ____ _ ____ _
+ * | _ \| __ )| | | _ \ ___ ___ __| |___
+ * | |_) | _ \| | | | | |/ _ \/ __/ _` / __|
+ * | _ <| |_) | |___ | |_| | __/ (_| (_| \__ \
+ * |_| \_\____/|_____|____/ \___|\___\__,_|___/
+ * 
+ * Rodrigo Batista Leite | RBL Dev © 2025
+ * GitHub: https://github.com/rodrigobatista-dev
+ */
