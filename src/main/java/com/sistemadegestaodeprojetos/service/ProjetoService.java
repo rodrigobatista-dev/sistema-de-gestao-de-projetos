@@ -33,7 +33,7 @@ public class ProjetoService {
     // Cria um novo projeto
     public ProjetoResponseDTO criarProjeto(ProjetoRequestDTO dto) {
         // Buscando o usuário pelo ID passado no DTO
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId()) // <--- Alterado para usar o UsuarioRepository
                 .orElseThrow(() -> new UsuarioNaoEncontradoException(
                         "Usuário com ID " + dto.getUsuarioId() + " não encontrado"));
 
@@ -91,7 +91,7 @@ public class ProjetoService {
         Projeto projeto = projetoRepository.findById(id)
                 .orElseThrow(() -> new ProjetoNaoEncontradaException("Projeto com ID " + id + " não encontrado"));
 
-        return ProjetoMapper.toDTO(projeto);
+        return ProjetoMapper.toDTO(projeto); // Convertendo a entidade Projeto para DTO
     }
 
     // Exclui um projeto por ID
