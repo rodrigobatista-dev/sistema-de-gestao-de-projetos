@@ -31,10 +31,12 @@ public class UsuarioService {
 
     // Cadastra um novo usuário usando o DTO
     public UsuarioResponseDTO criarUsuario(UsuarioRequestDTO dto) {
-        Usuario usuario = UsuarioMapper.toEntity(dto);
-        Usuario salvo = usuarioRepository.save(usuario);
-        return UsuarioMapper.toDTO(salvo);
-    }
+    Usuario usuario = UsuarioMapper.toEntity(dto);
+    usuario.setRole("USER"); 
+    Usuario salvo = usuarioRepository.save(usuario);
+    return UsuarioMapper.toDTO(salvo);
+}
+
 
     public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
         Usuario usuarioexistente = usuarioRepository.findById(id)

@@ -13,13 +13,14 @@ public class UsuarioMapper {
     }
 
     public static Usuario toEntity(UsuarioRequestDTO dto) {
-        Usuario usuario = new Usuario();
-        usuario.setNome(dto.getNome());
-        usuario.setEmail(dto.getEmail());
-        usuario.setSenha(dto.getSenha());
-        usuario.setCpf(dto.getCpf());
-        return usuario;
-    }
+    Usuario usuario = new Usuario();
+    usuario.setNome(dto.getNome());
+    usuario.setEmail(dto.getEmail());
+    usuario.setSenha(dto.getSenha());
+    usuario.setCpf(dto.getCpf());
+    usuario.setRole("USER"); 
+    return usuario;
+}
 
     public static Usuario updateEntity(Usuario usuarioExistente, UsuarioRequestDTO dto) {
 

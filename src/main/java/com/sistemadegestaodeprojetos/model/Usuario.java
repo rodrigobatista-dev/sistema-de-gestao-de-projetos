@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 /* import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne; */
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity(name = "USUARIO")
 public class Usuario {
@@ -40,6 +41,9 @@ public class Usuario {
     @JsonIgnore
     @OneToMany(mappedBy = "usuarioResponsavel", cascade = CascadeType.ALL)
     private List<Tarefa> tarefas;
+
+    @NotBlank
+    private String role;
 
     public Long getId() {
         return id;
@@ -96,6 +100,16 @@ public class Usuario {
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    
 
     /*
      * @ManyToOne
